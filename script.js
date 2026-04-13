@@ -13,31 +13,31 @@ const WINNING_COMBOS = [
   [2, 4, 6], // diagonal
 ];
 
-let board = Array[9].fill(null);
+let board = Array(9).fill(null);
 let currentPlayer = "X";
 let gameOver = false;
 
 cells.forEach((cell) => {
   cell.addEventListener("click", () => {
     if (gameOver) return;
-    const finished = makeMove(cells.dataset.index, currentPlayer);
+    const finished = makeMove(cell.dataset.index, currentPlayer);
 
     if (!finished) {
-      currentPlayer = currentPlayer === "X" ? "Y" : "X";
-      statusText.textContent`Player ${currentPlayer === "X" ? "1" : "2"} ${currentPlayer} turn `;
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      statusText.textContent = `Player ${currentPlayer === "X" ? "1" : "2"} (${currentPlayer}) turn `;
     }
   });
 });
 
 resetBtn.addEventListener("click", () => {
-  board = Array[9].fill(null);
+  board = Array(9).fill(null);
   currentPlayer = "X";
   gameOver = false;
   statusText.textContent = "Player 1(X) turn";
   cells.forEach((cell) => {
     cell.textContent = "";
     cell.disabled = false;
-    cell.className("cell");
+    cell.className = "cell";
   });
 });
 
@@ -48,16 +48,15 @@ function checkWinner() {
       return { winner: board[a], combo: [a, b, c] };
     }
   }
-  if (board.every((ceil) => ceil !== null)) {
+  if (board.every((cell) => cell !== null)) {
     return { winner: "draw", combo: null };
   }
   return null;
 }
-// ispisuje sve podatke u odredjeno polje na UI
-//
+
 function makeMove(index, symbol) {
   board[index] = symbol;
-  cells[index].classList.add = symbol.toLowerCase();
+  cells[index].classList.add(symbol.toLowerCase());
   cells[index].textContent = symbol;
   cells[index].disabled = true;
 
@@ -71,7 +70,7 @@ function makeMove(index, symbol) {
       result.combo.forEach((i) => cells[i].classList.add("win"));
 
     statusText.textContent = //if else
-      result.winner === "x"
+      result.winner === "X"
         ? "Player 1(X) wins"
         : result.winner === "O"
           ? "Player2(O) Wins"
